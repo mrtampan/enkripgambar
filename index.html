@@ -32,7 +32,7 @@
 </html>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/mrtampan/vyvy/vyvy-min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/mrtampan/vyvy@main/vyvy-min.js"></script>
 <script>
 
     var key = "twice";
@@ -49,13 +49,19 @@
     }
 
     function enkrip(param){
-        let result = CryptoJS.AES.encrypt(param, key);
+        let result = CryptoJS.AES.encrypt(param, key, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.NoPadding
+        });
         vyData.resEncrypt = result;  
         vyInit();     
     }
 
     function convert(){
-        let result = CryptoJS.AES.decrypt(vyData.inputEnc, key);
+        let result = CryptoJS.AES.decrypt(vyData.inputEnc, key, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.NoPadding            
+        });
         
         vyData.resDescrypt = CryptoJS.enc.Base64.stringify(result);
         vyData.resDescrypt = atob(vyData.resDescrypt);
